@@ -6,18 +6,19 @@ Sub OnExecPerField()
 
     Dim TimeDiffSec As Integer
 
-    Dim TimeSec As Integer   '1 Leftover
+    Dim TimeSec As Integer   '1
     Dim TimeMin As Integer   '60
     Dim TimeHr As Integer    '3600
     Dim TimeDay As Integer   '86400
 
     NowTime = GetCurrentTime()
 
-    TargetTime.Minute = GetText("Minute")
-    TargetTime.Hour  = GetText("Hour")
-    TargetTime.DayOfMonth = GetText("Day")
-    TargetTime.Month = GetText("Month")
-    TargetTime.Year = GetText("Year")
+    TargetTime.Second = GetTime("Second")
+    TargetTime.Minute = GetTime("Minute")
+    TargetTime.Hour  = GetTime("Hour")
+    TargetTime.DayOfMonth = GetTime("Day")
+    TargetTime.Month = GetTime("Month")
+    TargetTime.Year = GetTime("Year")
 
     TimeDiffSec = TargetTime.TotalSeconds - NowTime.TotalSeconds
 
@@ -43,17 +44,18 @@ End Sub
 Sub SetTime(Time As Integer, Field As String, Unit As String)
     If Time = 1 then Unit = Unit.Left(Unit.Length -1)
 
-    If Time < 10 then SetText(Feild, "Number", "0" & CStr(Time))
+    If Time < 10 then SetText(Field, "Number", "0" & CStr(Time))
     If Time > 9 then SetText(Field, "Number", CStr(Time))
     SetText(Field, "Text", Unit)
 End Sub
 
-Function GetText(Field As String) As Integer
-     GetText = CInt(Scene.FindContainer("Input").FindSubContainer(Field).geometry.text)
+Function GetTime(Field As String) As Integer
+     GetTime = CInt(Scene.FindContainer("Input").FindSubContainer(Field).geometry.text)
 End Function
 
 Sub SetText(Clock As String, Field As String, Value As String)
     Scene.FindContainer("Clock").FindSubContainer(Clock).FindSubContainer(Field).geometry.text = Value
 End Sub
+
 
 
